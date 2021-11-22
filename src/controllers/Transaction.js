@@ -57,11 +57,11 @@ const transaction = {
   insert: (req, res) => {
     try {
       const { body } = req;
-      console.log(body);
       transactionModel.insert(body).then((result) => {
         redisAction.del('transaction', (err) => {
           if (err) {
             failed(res, 401, err);
+            console.log(body);
           }
         });
         success(res, result, 'succes');
