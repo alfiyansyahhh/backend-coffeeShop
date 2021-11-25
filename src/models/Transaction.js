@@ -3,7 +3,7 @@ const db = require('../config/db');
 const transactionModel = {
   getAll: () => new Promise((resolve, reject) => {
     db.query(
-      `select dt.id,id_user,u.display_name,alamat,payment,shipping,subtotal,tax,total,
+      `select dt.id,id_user,u.display_name,alamat,payment,shipping_cost,subtotal,tax,total,
         p.id_product,p.price,product_name,category,p.categoryID 
         from details_transaction as dt
         left join transaction as t on dt.id_masterTransaction=t.id 
@@ -20,7 +20,7 @@ const transactionModel = {
   }),
   getList: () => new Promise((resolve, reject) => {
     db.query(
-      `select dt.id,id_user,u.display_name,alamat,payment,shipping,subtotal,tax,total,p.id_product,p.price,product_name,category,p.categoryID 
+      `select dt.id,id_user,u.display_name,alamat,payment,shipping_cost,subtotal,tax,total,p.id_product,p.price,product_name,category,p.categoryID 
         from details_transaction as dt
         left join transaction as t on dt.id_masterTransaction=t.id 
         left join users as u on t.id_user=u.id 
@@ -56,8 +56,8 @@ const transactionModel = {
     });
   }),
   insert: (body) => new Promise((resolve, reject) => {
-    db.query(`INSERT INTO transaction (id_user,penerima,alamat,phone_number,payment,shipping,subtotal,tax,total) 
-    VALUE ('${body.id_user}','${body.penerima}','${body.alamat}','${body.phone_number}','${body.payment}','${body.shipping}','${body.subtotal}',
+    db.query(`INSERT INTO transaction (id_user,penerima,alamat,phone_number,payment,shipping_cost,subtotal,tax,total) 
+    VALUE ('${body.id_user}','${body.penerima}','${body.alamat}','${body.phone_number}','${body.payment}','${body.shipping_cost}','${body.subtotal}',
         '${body.tax}','${body.total}')`, (err, result) => {
       if (err) {
         reject(err);

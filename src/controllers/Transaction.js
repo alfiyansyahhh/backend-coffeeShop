@@ -59,6 +59,7 @@ const transaction = {
       const { body } = req;
       transactionModel.insert(body).then((result) => {
         redisAction.del('transaction', (err) => {
+          console.log('redis');
           if (err) {
             failed(res, 401, err);
             console.log(body);
